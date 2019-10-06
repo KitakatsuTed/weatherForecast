@@ -8,7 +8,7 @@ import java.util.*
 
 data class Forecast(val title: String, val description: String, val currentTime: Date, val weathers: List<Weather>)
 
-data class Weather(val dateLabel: String, val telop: String, val date: String, val minTemp: String, val maxTemp: String)
+data class Weather(val dateLabel: String, val telop: String, val date: String, val minTemp: String?, val maxTemp: String?)
 
 class ForecastLoader(context: Context, val locationId: String) : AsyncTaskLoader<Forecast>(context) {
 
@@ -61,12 +61,14 @@ class ForecastLoader(context: Context, val locationId: String) : AsyncTaskLoader
 
         for (i in (0..datas.length() - 1)) {
             val forecastJson: JSONObject = datas.getJSONObject(i)
+            val temp = forecastJson.getJSONObject("temperature")
+
             val weather = Weather(
-                forecastJson.getString("dataLabel"),
+                forecastJson.getString("dateLabel"),
                 forecastJson.getString("telop"),
                 forecastJson.getString("date"),
-                forecastJson.getJSONObject("min").getString("celsius"),
-                forecastJson.getJSONObject("max").getString("celsius")
+                if (temp.isNull("min")) "No Data" else temp.getJSONObject("min").getString("celsius"),
+                if (temp.isNull("max")) "No Data" else temp.getJSONObject("max").getString("celsius")
             )
 
             weathers.add(weather)

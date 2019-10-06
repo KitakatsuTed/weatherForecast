@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">WeatherForecast</string>
+    <string name="lowestTemp">最低気温(℃)</string>
+    <string name="highestTemp">最高気温(℃)</string>
 </resources>

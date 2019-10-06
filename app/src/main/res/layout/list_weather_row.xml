@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="wrap_content">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dateLabel" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="16dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" tools:text="いつ"
+    />
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/telop" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toEndOf="@+id/dateLabel" android:layout_marginStart="8dp"
+            app:layout_constraintTop_toTopOf="parent" android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:layout_marginTop="16dp" app:layout_constraintHorizontal_bias="0.1" tools:text="晴れ"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/minTemp"
+            app:layout_constraintTop_toBottomOf="@+id/dateLabel"
+            android:layout_marginTop="16dp" android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            tools:text="10" app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="16dp"
+            android:layout_marginStart="8dp" app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/lowestTemp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/maxTemp"
+            app:layout_constraintTop_toBottomOf="@+id/telop" android:layout_marginTop="16dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            tools:text="20"
+            android:layout_marginBottom="16dp" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.0" app:layout_constraintStart_toEndOf="@+id/highestTemp"
+            android:layout_marginStart="8dp"/>
+    <TextView
+            android:text="@string/lowestTemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lowestTemp" app:layout_constraintStart_toStartOf="@+id/dateLabel"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/dateLabel"/>
+    <TextView
+            android:text="@string/highestTemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/highestTemp" app:layout_constraintStart_toEndOf="@+id/minTemp"
+            android:layout_marginStart="24dp" app:layout_constraintTop_toBottomOf="@+id/telop"
+            android:layout_marginTop="16dp" android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

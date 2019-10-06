@@ -61,5 +61,6 @@ private fun parseToJson(stream: InputStream): JSONObject {
     //先ほどbufferに入れた、取得した文字列
     val jsonText = buffer.toString()
 
+    // 有限のwifiの接続でhtmlの文字列が帰ってきたらどうしよ？
     return JSONObject(jsonText)
 }
