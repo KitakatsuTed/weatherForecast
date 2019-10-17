@@ -3,19 +3,27 @@ package com.kitakatsuted.weatherforecast
 import android.content.Context
 import androidx.loader.content.AsyncTaskLoader
 import org.json.JSONObject
+import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.*
 
-data class Forecast(val title: String, val description: String, val currentTime: Date, val weathers: List<Weather>)
+data class Forecast(val title: String,
+                    val description: String,
+                    val currentTime: Date,
+                    val weathers: List<Weather>,
+                    val locations: List<Location>) : Serializable
 
 data class Weather(val dateLabel: String, val telop: String, val date: String, val minTemp: String?, val maxTemp: String?)
+
+data class Location(val link: String, val name: String)
 
 class ForecastLoader(context: Context, val locationId: String) : AsyncTaskLoader<Forecast>(context) {
 
     private var cache : Forecast? = null
 
     override fun loadInBackground(): Forecast? {
-        val jsonObject = httpGet(generateApiUrl(locationId))
+        val jsonObject = httpGetToJson(getLocationLink(locationId))
+        println(getLocationLink(locationId))
 
         if (jsonObject != null) {
             // 取得に成功したら、パースして返す
@@ -52,15 +60,17 @@ class ForecastLoader(context: Context, val locationId: String) : AsyncTaskLoader
         cache = null
     }
 
-    private fun generateApiUrl(locationId: String) = "http://weather.livedoor.com/forecast/webservice/json/v1?city=${locationId}"
+    private fun getLocationLink(locationId: String) : String = "http://weather.livedoor.com/forecast/webservice/json/v1?city=${locationId}"
 
     private fun parseForecast(jsonObject: JSONObject): Forecast {
         val weathers = arrayListOf<Weather>()
+        val locationArray = arrayListOf<Location>()
 
-        val datas = jsonObject.getJSONArray("forecasts")
+        val forecasts = jsonObject.getJSONArray("forecasts")
+        val locations = jsonObject.getJSONArray("pinpointLocations")
 
-        for (i in (0..datas.length() - 1)) {
-            val forecastJson: JSONObject = datas.getJSONObject(i)
+        for (i in (0..forecasts.length() - 1)) {
+            val forecastJson: JSONObject = forecasts.getJSONObject(i)
             val temp = forecastJson.getJSONObject("temperature")
 
             val weather = Weather(
@@ -74,11 +84,19 @@ class ForecastLoader(context: Context, val locationId: String) : AsyncTaskLoader
             weathers.add(weather)
         }
 
+        for (i in (0..(locations.length() - 1))) {
+            val locationJson: JSONObject = locations.getJSONObject(i)
+            val location = Location(locationJson.getString("link"), locationJson.getString("name"))
+
+            locationArray.add(location)
+        }
+
         return Forecast(
             jsonObject.getString("title"),
             jsonObject.getJSONObject("description").getString("text"),
             parseToDate(jsonObject.getString("publicTime")) ,
-            weathers)
+            weathers,
+            locationArray)
     }
 
     private fun parseToDate(dateString: String): Date {

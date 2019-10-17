@@ -44,12 +44,13 @@
             android:layout_marginTop="8dp" tools:text="予報時刻"/>
     <ListView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             app:layout_constraintStart_toEndOf="@+id/barrier"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
             android:id="@+id/weatherList"
             app:layout_constraintHorizontal_bias="0.0" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/forecastDatesLabel" tools:listitem="@layout/list_weather_row"/>
+            app:layout_constraintTop_toBottomOf="@+id/forecastDatesLabel" tools:listitem="@layout/list_weather_row"
+            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -59,4 +60,14 @@
             android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/descriptionScroll"
             android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0" tools:text="今日、明日、明後日の予報"/>
+    <TextView
+            android:text="詳細地域予報へ"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/changeLocationButton"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toEndOf="@+id/forecastTitle" android:layout_marginStart="8dp"
+            app:layout_constraintHorizontal_bias="1.0" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

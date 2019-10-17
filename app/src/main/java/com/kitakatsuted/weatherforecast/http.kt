@@ -1,5 +1,6 @@
 package com.kitakatsuted.weatherforecast
 
+import android.graphics.Bitmap
 import org.json.JSONObject
 import java.io.BufferedInputStream
 import java.io.BufferedReader
@@ -10,7 +11,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 
-fun httpGet(url: String): JSONObject? {
+fun httpGet(url: String): InputStream? {
 
     try {
         // 通信接続用のオブジェクトを作る
@@ -30,8 +31,7 @@ fun httpGet(url: String): JSONObject? {
         // ステータスコードの確認
         if (con.responseCode in 200..299){
             // 成功したら、レスポンスの入力ストリームを、BufferedInputStreamとして返す
-            val stream: BufferedInputStream = BufferedInputStream(con.inputStream)
-            return parseToJson(stream)
+            return con.inputStream
         }
 
         // 失敗
@@ -46,6 +46,19 @@ fun httpGet(url: String): JSONObject? {
 fun httpPost(url: String) {
     TODO()
 }
+
+fun httpGetToJson(url: String): JSONObject {
+    val stream = httpGet(url)
+    return parseToJson(BufferedInputStream(stream))
+}
+
+fun httpGetToStream(url: String): InputStream {
+    return BufferedInputStream(httpGet(url))
+}
+
+//fun httpGetToBitmap(url: String): Bitmap {
+//
+//}
 
 private fun parseToJson(stream: InputStream): JSONObject {
     val reader = BufferedReader(InputStreamReader(stream))
