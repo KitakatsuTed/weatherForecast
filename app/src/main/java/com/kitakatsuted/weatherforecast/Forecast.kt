@@ -13,7 +13,7 @@ data class Forecast(val title: String,
                     val weathers: List<Weather>,
                     val locations: List<Location>) : Serializable
 
-data class Weather(val dateLabel: String, val telop: String, val date: String, val minTemp: String?, val maxTemp: String?)
+data class Weather(val dateLabel: String, val telop: String, val date: String, val minTemp: String?, val maxTemp: String?, val imageUrl: String)
 
 data class Location(val link: String, val name: String)
 
@@ -78,8 +78,9 @@ class ForecastLoader(context: Context, val locationId: String) : AsyncTaskLoader
                 forecastJson.getString("telop"),
                 forecastJson.getString("date"),
                 if (temp.isNull("min")) "No Data" else temp.getJSONObject("min").getString("celsius"),
-                if (temp.isNull("max")) "No Data" else temp.getJSONObject("max").getString("celsius")
-            )
+                if (temp.isNull("max")) "No Data" else temp.getJSONObject("max").getString("celsius"),
+                forecastJson.getString("imageUrl")
+)
 
             weathers.add(weather)
         }

@@ -56,10 +56,6 @@ fun httpGetToStream(url: String): InputStream {
     return BufferedInputStream(httpGet(url))
 }
 
-//fun httpGetToBitmap(url: String): Bitmap {
-//
-//}
-
 private fun parseToJson(stream: InputStream): JSONObject {
     val reader = BufferedReader(InputStreamReader(stream))
     val buffer = StringBuffer()
